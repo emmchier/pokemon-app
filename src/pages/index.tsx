@@ -2,6 +2,7 @@ import { GetStaticProps, NextPage } from 'next';
 import pokemonApi from '../api/pokemonApi';
 
 import { Layout } from '../components/layouts';
+import { PokemonList } from '../components/pokemon/PokemonList';
 import { PokemonListResponse, SmallPokemon } from '../interfaces';
 
 interface HomePageTypes {
@@ -11,11 +12,15 @@ interface HomePageTypes {
 const HomePage: NextPage<HomePageTypes> = ({ pokemonList }) => {
   console.log(pokemonList);
 
-  return <Layout title="Poke App"></Layout>;
+  return (
+    <Layout title="Poke App">
+      <PokemonList list={pokemonList} />
+    </Layout>
+  );
 };
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
-  const { data } = await pokemonApi.get<PokemonListResponse>('/pokemon?limit=151');
+  const { data } = await pokemonApi.get<PokemonListResponse>('/pokemon?limit=102');
 
   const pokemons: SmallPokemon[] = data.results.map((pokemon, i) => ({
     ...pokemon,
