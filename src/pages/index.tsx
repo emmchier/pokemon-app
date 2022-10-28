@@ -1,3 +1,4 @@
+import { Box, Typography } from '@mui/material';
 import { GetStaticProps, NextPage } from 'next';
 import { useContext, useEffect, useState } from 'react';
 import pokemonApi from '../api/pokemonApi';
@@ -21,7 +22,28 @@ const HomePage: NextPage<HomePageTypes> = ({ pokemonList }) => {
 
   return (
     <Layout title="Poke App">
-      <PokemonList list={filteredPokemons} />
+      {filteredPokemons.length === 0 ? (
+        <Box
+          sx={{
+            width: '100%',
+            height: '100vh',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Typography
+            sx={{
+              color: '#FFFFFF',
+            }}
+            variant="h4"
+          >
+            No results match the search
+          </Typography>
+        </Box>
+      ) : (
+        <PokemonList list={filteredPokemons} />
+      )}
     </Layout>
   );
 };

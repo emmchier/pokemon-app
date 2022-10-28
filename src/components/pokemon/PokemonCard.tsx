@@ -15,7 +15,7 @@ export const PokemonCard: FC<PokemonCardTypes> = ({ pokemon }) => {
   const { isDarkMode } = useContext(ModeContext);
 
   return (
-    <Card /*onClick={() => router.push(`/name/${pokemon.name}`)}*/ sx={{ borderRadius: 5 }}>
+    <Card onClick={() => router.push(`/name/${pokemon.name}`)} sx={{ borderRadius: 5 }}>
       <CardActionArea>
         <div
           style={{
