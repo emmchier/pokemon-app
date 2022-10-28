@@ -1,8 +1,10 @@
 import { GetStaticProps, NextPage } from 'next';
+import { useContext, useEffect, useState } from 'react';
 import pokemonApi from '../api/pokemonApi';
 
 import { Layout } from '../components/layouts';
 import { PokemonList } from '../components/pokemon/PokemonList';
+import { PokemonContext } from '../context/pokemon/PokemonContext';
 import { PokemonListResponse, SmallPokemon } from '../interfaces';
 
 interface HomePageTypes {
@@ -10,11 +12,16 @@ interface HomePageTypes {
 }
 
 const HomePage: NextPage<HomePageTypes> = ({ pokemonList }) => {
-  console.log(pokemonList);
+  const { setPokemons, filteredPokemons, setFilteredPokemons } = useContext(PokemonContext);
+
+  useEffect(() => {
+    setPokemons(pokemonList);
+    setFilteredPokemons(pokemonList);
+  }, []);
 
   return (
     <Layout title="Poke App">
-      <PokemonList list={pokemonList} />
+      <PokemonList list={filteredPokemons} />
     </Layout>
   );
 };

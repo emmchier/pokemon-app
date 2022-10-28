@@ -1,10 +1,11 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 
 import Link from 'next/link';
 
-import { AppBar, FormControlLabel, Switch, Toolbar, Typography } from '@mui/material';
+import { AppBar, Box, FormControlLabel, Switch, Toolbar, Typography } from '@mui/material';
 import { useContext } from 'react';
 import { ModeContext } from '../../../context/ui/ModeContext';
+import { SearchInput } from '../search-input';
 
 export const Navbar: FC = () => {
   const { isDarkMode, setIsDarkMode } = useContext(ModeContext);
@@ -12,11 +13,14 @@ export const Navbar: FC = () => {
   return (
     <AppBar position="sticky">
       <Toolbar sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <Link href="/">
-          <Typography variant="h5" component="h1">
-            POKE APP
-          </Typography>
-        </Link>
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <Link href="/">
+            <Typography variant="h5" component="h1">
+              POKE APP
+            </Typography>
+          </Link>
+          <SearchInput />
+        </Box>
         <FormControlLabel
           control={
             <Switch
