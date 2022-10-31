@@ -6,6 +6,8 @@ interface PokemonContextTypes {
   setPokemons: (pokemonList: SmallPokemon[]) => void;
   filteredPokemons: SmallPokemon[];
   setFilteredPokemons: (pokemonList: SmallPokemon[]) => void;
+  favoritePokemons: number[];
+  setFavoritePokemons: (pokemonList: number[]) => void;
 }
 
 export const PokemonContext = createContext({} as PokemonContextTypes);

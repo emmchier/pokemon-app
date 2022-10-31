@@ -6,13 +6,7 @@ export const lightTheme = createTheme({
     mode: 'light',
     background: { default: grey[200] },
     primary: {
-      main: '#4a148c',
-    },
-    secondary: {
-      main: '#19857b',
-    },
-    error: {
-      main: red.A400,
+      main: '#E64C3C',
     },
   },
   components: {

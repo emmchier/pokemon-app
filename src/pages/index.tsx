@@ -1,10 +1,11 @@
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { GetStaticProps, NextPage } from 'next';
 import { useContext, useEffect, useState } from 'react';
 import pokemonApi from '../api/pokemonApi';
-
+import { EmptyContent } from '../components';
 import { Layout } from '../components/layouts';
 import { PokemonList } from '../components/pokemon/PokemonList';
+import { SearchInput } from '../components/ui/search-input';
 import { PokemonContext } from '../context/pokemon/PokemonContext';
 import { PokemonListResponse, SmallPokemon } from '../interfaces';
 
@@ -22,25 +23,18 @@ const HomePage: NextPage<HomePageTypes> = ({ pokemonList }) => {
 
   return (
     <Layout title="Poke App">
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          marginBottom: '30px',
+        }}
+      >
+        <SearchInput />
+      </Box>
       {filteredPokemons.length === 0 ? (
-        <Box
-          sx={{
-            width: '100%',
-            height: '100vh',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <Typography
-            sx={{
-              color: '#FFFFFF',
-            }}
-            variant="h4"
-          >
-            No results match the search
-          </Typography>
-        </Box>
+        <EmptyContent message="No results match the search" />
       ) : (
         <PokemonList list={filteredPokemons} />
       )}

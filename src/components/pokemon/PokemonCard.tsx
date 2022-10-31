@@ -1,22 +1,44 @@
-import { FC, useContext } from 'react';
-import { useRouter } from 'next/router';
+import { FC, useContext, useState } from 'react';
 
 import { SmallPokemon } from '../../interfaces';
-import { Box, Card, CardActionArea, CardContent, CardMedia, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Card,
+  CardActionArea,
+  CardContent,
+  CardMedia,
+  Typography,
+} from '@mui/material';
 import { ModeContext } from '../../context/ui/ModeContext';
+import localFavourites, { onToggleFavorite } from '../../utils/localFavourites';
+import { PokemonContext } from '../../context/pokemon';
 
 interface PokemonCardTypes {
-  pokemon: SmallPokemon;
+  pokemon?: SmallPokemon;
+  pokemonId?: number;
+  isFavourite?: boolean;
+  onClick?: () => void;
 }
 
-export const PokemonCard: FC<PokemonCardTypes> = ({ pokemon }) => {
-  const router = useRouter();
-
+export const PokemonCard: FC<PokemonCardTypes> = ({
+  pokemon = {},
+  pokemonId = 0,
+  isFavourite = false,
+  onClick = () => {},
+}) => {
   const { isDarkMode } = useContext(ModeContext);
+  const { setFavoritePokemons } = useContext(PokemonContext);
+  const [isInFavorites, setIsInFavorites] = useState(localFavourites.existInFavorites(pokemonId));
+
+  const handleUndoFavourite = () => {
+    onToggleFavorite(pokemonId, isInFavorites, setIsInFavorites);
+    setFavoritePokemons(localFavourites.pokemons());
+  };
 
   return (
-    <Card onClick={() => router.push(`/name/${pokemon.name}`)} sx={{ borderRadius: 5 }}>
-      <CardActionArea>
+    <Card sx={{ borderRadius: 5, p: isFavourite === true ? 2 : 0 }}>
+      <CardActionArea onClick={onClick}>
         <div
           style={{
             margin: '30px',
@@ -34,36 +56,47 @@ export const PokemonCard: FC<PokemonCardTypes> = ({ pokemon }) => {
             }}
             component="img"
             height="140"
-            image={pokemon.img}
-            alt={pokemon.name}
+            image={
+              isFavourite === false
+                ? pokemon.img
+                : `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokemonId}.svg`
+            }
+            alt={pokemon ? pokemon.name : 'a kind of pokemon'}
           />
         </div>
-        <CardContent>
-          <Box
-            sx={{
-              background: isDarkMode === true ? 'rgba(0,0,0,0.5)' : 'rgba(0,0,0,0.1)',
-              position: 'relative',
-              borderRadius: 3,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <Typography
-              gutterBottom
-              variant="h6"
-              component="h4"
+        {isFavourite === false && (
+          <CardContent>
+            <Box
               sx={{
-                textTransform: 'capitalize',
-                margin: '5px 10px',
-                color: isDarkMode === true ? '#FFFFFF' : '#000000',
+                background: isDarkMode === true ? 'rgba(0,0,0,0.5)' : 'rgba(0,0,0,0.1)',
+                position: 'relative',
+                borderRadius: 3,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
               }}
             >
-              {pokemon.name}
-            </Typography>
-          </Box>
-        </CardContent>
+              <Typography
+                gutterBottom
+                variant="h6"
+                component="h4"
+                sx={{
+                  textTransform: 'capitalize',
+                  margin: '5px 10px',
+                  color: isDarkMode === true ? '#FFFFFF' : '#000000',
+                }}
+              >
+                {pokemon ? pokemon.name : ''}
+              </Typography>
+            </Box>
+          </CardContent>
+        )}
       </CardActionArea>
+      {isFavourite === true && (
+        <Button variant="outlined" fullWidth onClick={handleUndoFavourite}>
+          Undo
+        </Button>
+      )}
     </Card>
   );
 };

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useState } from 'react';
 import { FCC } from '../../types';
 
 import { SmallPokemon } from '../../interfaces';
@@ -7,6 +7,7 @@ import { PokemonContext } from './PokemonContext';
 export const PokemonProvider: FCC = ({ children }) => {
   const [pokemons, setPokemons] = useState<SmallPokemon[]>([]);
   const [filteredPokemons, setFilteredPokemons] = useState<SmallPokemon[]>([]);
+  const [favoritePokemons, setFavoritePokemons] = useState<number[]>([]);
 
   return (
     <PokemonContext.Provider
@@ -15,6 +16,8 @@ export const PokemonProvider: FCC = ({ children }) => {
         setPokemons,
         filteredPokemons,
         setFilteredPokemons,
+        favoritePokemons,
+        setFavoritePokemons,
       }}
     >
       {children}

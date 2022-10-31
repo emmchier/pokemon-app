@@ -1,4 +1,4 @@
-import { useReducer, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { FCC } from '../../types';
 import { ModeContext } from '.';
@@ -7,6 +7,12 @@ import { darkTheme, globalStyle, lightTheme } from '../../styles/themes';
 
 export const ModeProvider: FCC = ({ children }) => {
   const [isDarkMode, setIsDarkMode] = useState(true);
+
+  useEffect(() => {
+    isDarkMode === true
+      ? localStorage.setItem('modeType', 'dark')
+      : localStorage.setItem('modeType', 'light');
+  }, [isDarkMode]);
 
   return (
     <ModeContext.Provider
