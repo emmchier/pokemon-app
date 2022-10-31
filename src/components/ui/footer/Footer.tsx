@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 
 import { Box } from '@mui/material';
+
 import { GitHub } from '@mui/icons-material';
 
 export const Footer: FC = () => {
