@@ -4,6 +4,7 @@ import { FCC } from '../../types';
 import { Box, Container } from '@mui/material';
 
 import { Navbar } from '../ui';
+import { Footer } from '../ui/footer/Footer';
 
 interface LayoutTypes {
   title?: string;
@@ -27,6 +28,7 @@ export const Layout: FCC<LayoutTypes> = ({ children, title = 'PokeApp' }) => {
       <Container maxWidth="xl" sx={{ margin: '30px 0' }}>
         {children}
       </Container>
+      <Footer />
     </Box>
   );
 };
