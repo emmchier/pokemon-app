@@ -5,6 +5,7 @@ import { localFavorites } from '../../utils';
 import { EmptyContent } from '../../components';
 import { FavoritePokemons } from '../../components/pokemon/FavoritePokemons';
 import { PokemonContext } from '../../context/pokemon';
+import { Box } from '@mui/material';
 
 const FavoritesPage = () => {
   const { favoritePokemons, setFavoritePokemons } = useContext(PokemonContext);
@@ -15,11 +16,13 @@ const FavoritesPage = () => {
 
   return (
     <Layout title="Pokémons - Favoritos">
-      {favoritePokemons.length === 0 ? (
-        <EmptyContent message="No favourites yet" />
-      ) : (
-        <FavoritePokemons pokemons={favoritePokemons} />
-      )}
+      <Box component="section" sx={{ height: '100vh' }}>
+        {favoritePokemons.length === 0 ? (
+          <EmptyContent message="No favourites yet" />
+        ) : (
+          <FavoritePokemons pokemons={favoritePokemons} />
+        )}
+      </Box>
     </Layout>
   );
 };

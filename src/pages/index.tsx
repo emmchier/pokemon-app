@@ -23,7 +23,7 @@ const HomePage: NextPage<HomePageTypes> = ({ pokemonList }) => {
 
   return (
     <Layout title="Poke App">
-      <Box
+      {/* <Box
         sx={{
           display: 'flex',
           alignItems: 'center',
@@ -32,7 +32,7 @@ const HomePage: NextPage<HomePageTypes> = ({ pokemonList }) => {
         }}
       >
         <SearchInput />
-      </Box>
+      </Box> */}
       {filteredPokemons.length === 0 ? (
         <EmptyContent message="No results match the search" />
       ) : (
